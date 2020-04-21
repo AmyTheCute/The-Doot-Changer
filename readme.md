@@ -24,3 +24,6 @@ Design motion systme for mgn12c for x
 make the dock have pins coming out form both sides for space efficiency
 
 Sphere magnets and pins or block magnets used as coupling (in progress)
+
+Pateron: 
+https://www.patreon.com/WobblyEmily
