@@ -21,10 +21,11 @@ TODO>:
 
 Design motion systme for mgn12c for x (In progress)
 
+Tilting hotends with a single extruder in direct drive mode, with a single 12g servo  (In progress after the new motion system)
+
 make the dock have pins coming out form both sides for space efficiency
 
 ~~Sphere magnets and pins or block magnets used as coupling (in progress)~~ DONE!
-Tilting hotends with a single extruder in direct drive mode, with a single 12g servo
 
 Pateron: 
 https://www.patreon.com/WobblyEmily
