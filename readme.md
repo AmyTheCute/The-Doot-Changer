@@ -19,11 +19,12 @@ EDIT: V0.9 i made some very near improvments and it's working great now :) also 
 
 TODO>:
 
-Design motion systme for mgn12c for x
+Design motion systme for mgn12c for x (In progress)
 
 make the dock have pins coming out form both sides for space efficiency
 
-Sphere magnets and pins or block magnets used as coupling (in progress)
+~~Sphere magnets and pins or block magnets used as coupling (in progress)~~ DONE!
+Tilting hotends with a single extruder in direct drive mode, with a single 12g servo
 
 Pateron: 
 https://www.patreon.com/WobblyEmily
