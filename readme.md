@@ -12,15 +12,6 @@ my doot changer 2.0 is in the works, it's going well. I probably will at least a
 
 
 
-TODO>:
 
-Design motion systme for mgn12c for x (In progress)
-
-Tilting hotends with a single extruder in direct drive mode, with a single 12g servo  (In progress after the new motion system)
-
-make the dock have pins coming out form both sides for space efficiency
-
-~~Sphere magnets and pins or block magnets used as coupling (in progress)~~ DONE!
-
-Donations (bitcoin only cause Iran :():
+Donations (bitcoin only cause I Iran :():
 Bitcoin wallet: bc1qhk2vj8rvw50vd60455dnn2gya4cqduanyrnwg3
