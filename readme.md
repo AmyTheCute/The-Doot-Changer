@@ -1,5 +1,8 @@
 This is the Github page for The Doot Changer
 
+Here are some footage and images and videos:
+https://photos.app.goo.gl/33gT6J51nGpFnPVe7
+
 This is mostly a modified HEVO a ton of credit goes to scott3d tech2c and other people I mentioned in the thingiverse page! Thank you all lovely people!
 
 It's based of my HEVO, Improved and has a Low Weight Tool Changer (Have some ideas in my head that'll make it be able to pick heavy tools) I haven't tried direct drive on it yet but it looks like it can handle it just well IMO
@@ -27,5 +30,5 @@ make the dock have pins coming out form both sides for space efficiency
 
 ~~Sphere magnets and pins or block magnets used as coupling (in progress)~~ DONE!
 
-Pateron: 
-https://www.patreon.com/WobblyEmily
+Donations (bitcoin only cause Iran :():
+Bitcoin wallet: bc1qhk2vj8rvw50vd60455dnn2gya4cqduanyrnwg3
