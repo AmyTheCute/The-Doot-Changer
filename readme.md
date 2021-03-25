@@ -13,7 +13,7 @@ my doot changer 2.0 is in the works, it's going well. I probably will at least a
 
 
 
-Donations (bitcoin only cause I live in Iran :():
+Donations (bitcoin only cause I live in Iran :( ):
 
 Bitcoin wallet: bc1qhk2vj8rvw50vd60455dnn2gya4cqduanyrnwg3
 
