@@ -9,7 +9,7 @@ It's based of my HEVO. The stock build is MOSTLY for bowden but will work for di
 
 my doot changer 2.0 is in the works, it's going well. I probably will at least ad the motion system as an addon here, it's much better than the stock one. plus it frees up the space lost to the docks
 
-
+feel free to message me at https://twitter.com/AmyTheBun to ask anything
 
 
 
