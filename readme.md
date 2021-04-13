@@ -17,6 +17,6 @@ Donations (bitcoin only cause I live in Iran :( ):
 
 Bitcoin wallet: bc1qhk2vj8rvw50vd60455dnn2gya4cqduanyrnwg3
 
-Lightning Netowrk donations lndhub://48039ea0ede7aebf420a:afc98bf14b3ef76c49b1
+for lightning network donations contact me at amythechloe@gmail.com since the links expire
 
 XRP (Ripple): rGJVbxGnUKjaEziDkd7TMDE6gjxK1qMbLc
