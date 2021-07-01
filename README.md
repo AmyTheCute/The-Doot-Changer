@@ -26,12 +26,20 @@ This project took a year and made my skin bleed, took all my time and cost me mo
 Please consider donating to this open source project with Crypto Currency or gift cards, I live in Iran so there are no other options for donations sadly. I'm HOPEFULLY moving to canada by next year. I plan to design a far better printer there if I get free time!
 Do message me if you decide to donate so I can squeak out loud very hard ;3 (never made a penny before!)
 
+
 Lightning BTC donations/Gift Cards(ask me what I can use!): Message me on Twitter! or email me at amythechloe@gmail.com
+
 **Bitcoin: ** bc1q29leehvq80clzepcrm7wtsgnv2tadmvsydmxu7
+
 **Etherium: ** 0xA452D135509F47C537F59b5ff25E07224D8d52fA
+
 **Nano: ** nano_3zkinhqcqg8xh6odjfebbzee9ami71cspahwopkuqdau6uajigqu5wzuhj3j
+
 **Doge: ** DMMuSDFufAwfoH3Mz64xYXeXyXZaeigpmg
+
 **Ada: ** addr1q8l76pjwzsrdls7mnaw3ceg3ww6ulyrpfwzxp9s3seanyndfgqdn7wjen3gxza8a3pz5uehukvyfqe6hrls5k3fe738q2vm566
+
 **Dash: ** XbxqB5sxuhRHdn6SaST4ezvLropXV4gDFs
+
 
 ToDo: Youtube guide
