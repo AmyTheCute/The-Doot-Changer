@@ -3,7 +3,7 @@ Files and designs for The Doot Changer
 Welcome to the official page for the Doot Changer Project! Keep in mind that Doot Changer Twist is still in alpha and although this version is working well you should build it at risk
 
 
-**WARNING**: Doot Changer Mag is missing some files. Contact me at Twitter: https://twitter.com/AmyTheBun to get the files, they're unoptimized and therefore not published. They'll be re-designed and published very soon
+**WARNING**: Doot Changer Twist is missing some files. Contact me at Twitter: https://twitter.com/AmyTheBun to get the files, they're unoptimized and therefore not published. They'll be re-designed and published very soon
 
 Doot Changer Mag Is well tested with bowden tools.
 
@@ -25,6 +25,8 @@ This printer is also a 150$ upgraede (1 additional trinaglelab tools with extrud
 This project took a year and made my skin bleed, took all my time and cost me more than 1500$ of prototype and researching. I put my heart into this project and chose to use easily sourcable materials so everyone can enjoy what I enjoy.
 Please consider donating to this open source project with Crypto Currency or gift cards, I live in Iran so there are no other options for donations sadly. I'm HOPEFULLY moving to canada by next year. I plan to design a far better printer there if I get free time!
 Do message me if you decide to donate so I can squeak out loud very hard ;3 (never made a penny before!)
+
+Update!: Thanks to awesome Anya (https://twitter.com/_Iyalei?s=09) for being the first doot changer donator ^~^ bunny heart is truly molten and warm enough to print PEEK
 
 
 Lightning BTC donations/Gift Cards(ask me what I can use!): Message me on Twitter! or email me at amythechloe@gmail.com
