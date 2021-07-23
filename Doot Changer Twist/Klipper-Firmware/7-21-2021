@@ -1,0 +1,811 @@
+[virtual_sdcard]
+path: ~/.octoprint/uploads/ 
+
+[mcu rpi]
+serial: /tmp/klipper_host_mcu
+
+[adxl345]
+cs_pin: rpi:None
+
+[resonance_tester]
+accel_chip: adxl345
+probe_points:
+    100,100,20  # an example
+
+[input_shaper]
+
+[output_pin millpin]
+pin: ar6
+pwm: True
+
+[output_pin STDBY]
+pin: ar63
+
+[output_pin LOCK_IN1]
+pin: ar5
+
+[output_pin LOCK_IN2]
+pin: ar4
+
+[output_pin LOCK_PWM]
+pin: ar11
+pwm: True
+
+
+[gcode_macro filament_unload]
+gcode:
+ M83
+ G1 E-650 F2500
+
+[gcode_macro filament_load]
+gcode:
+ M83
+ G1 E580 F2500
+ G1 E50 F500
+
+[gcode_macro tool_set_none]
+gcode:
+ SAVE_VARIABLE VARIABLE=currenttool VALUE='"none"'
+
+[gcode_macro PARK_CURRENT]
+gcode:
+    {% set svv = printer.save_variables.variables %}
+    {% if not (svv.currenttool == "none") %}
+        PARK_{svv.currenttool}
+    {% endif %}
+
+#[manual_stepper tool_lock]
+#step_pin: ar5
+#dir_pin: !ar4
+#enable_pin: !ar11
+#step_distance: 0.16
+#velocity: 20
+#accel: 1000
+
+[homing_override]
+gcode:
+     {% set svv = printer.save_variables.variables %}
+     G28 Y0
+     G28 X0
+     {% if (svv.currenttool  != "none") %}
+     G1 X15
+     PARK_{svv.currenttool}
+     G1 X0 Y0 F20000
+     G28 Y
+     G28 X
+     {% endif %}
+     G28 Z
+     G1 Z0
+
+axes: z
+#   The axes to override. For example, if this is set to "z" then the
+#   override script will only be run when the z axis is homed (eg, via
+#   a "G28" or "G28 Z0" command). Note, the override script should
+#   still home all axes. The default is "xyz" which causes the
+#   override script to be run in place of all G28 commands.
+#set_position_x:
+#set_position_y:
+set_position_z:0
+#   If specified, the printer will assume the axis is at the specified
+#   position prior to running the above g-code commands. Setting this
+#   disables homing checks for that axis. This may be useful if the
+#   head must move prior to invoking the normal G28 mechanism for an
+#   axis. The default is to not force a position for an axis.
+
+[save_variables]
+filename: ~/toolvariables.cfg
+
+[pause_resume]
+
+
+
+[stepper_y]
+step_pin: ar60
+dir_pin: ar61
+enable_pin: !ar56
+step_distance: .0125
+endstop_pin: !ar14
+position_endstop:0
+position_max: 340
+homing_speed: 120
+homing_retract_dist: 15
+
+[stepper_x]
+step_pin: ar54
+dir_pin: ar55
+enable_pin: !ar38
+homing_retract_dist: 0
+step_distance: .0125
+endstop_pin: ar3
+homing_speed: 120
+position_endstop: 0
+position_max: 300
+homing_retract_dist: 5
+
+[stepper_z]
+step_pin: ar46
+dir_pin: ar48
+enable_pin: !ar62
+step_distance: .0025
+endstop_pin: probe:z_virtual_endstop
+position_max: 300
+position_min: -12
+homing_speed: 20
+
+[probe]
+pin: ar18
+z_offset: -4.25
+y_offset: -46
+x_offset: 2.5
+speed:20
+samples: 2
+sample_retract_dist: 2
+samples_tolerance: 0.050
+samples_tolerance_retries: 2
+activate_gcode:
+    {% set svv = printer.save_variables.variables %}
+    {% if not (svv.currenttool == "none") %}
+        PARK_{svv.currenttool}
+    {% endif %}
+
+
+[bed_mesh]
+horizontal_move_z: 2
+speed: 120
+mesh_min: 10,0
+mesh_max: 290,210
+probe_count: 4,4
+mesh_pps: 2,3
+algorithm: bicubic
+bicubic_tension: 0.2
+fade_start: 1
+fade_end: 10
+fade_target: 0
+
+[gcode_macro FORCE_LOCK]
+gcode:
+     SET_PIN PIN=STDBY VALUE=1
+     SET_PIN PIN=LOCK_IN1 VALUE=1
+     SET_PIN PIN=LOCK_IN2 VALUE=0
+     SET_PIN PIN=LOCK_PWM VALUE=1.0
+     G4 P300
+     SET_PIN PIN=LOCK_PWM VALUE=0.8
+     G4 P50
+     SET_PIN PIN=LOCK_PWM VALUE=0.5
+     G4 P50
+     SET_PIN PIN=LOCK_PWM VALUE=0.3
+     G4 P50
+     SET_PIN PIN=LOCK_PWM VALUE=0.1
+     G4 P50
+     SET_PIN PIN=LOCK_PWM VALUE=0.0
+     SET_PIN PIN=STDBY VALUE=0
+     SET_PIN PIN=LOCK_IN2 VALUE=1
+
+#    MANUAL_STEPPER STEPPER=tool_lock set_position=0
+#    MANUAL_STEPPER STEPPER=tool_lock Move=300 SPEED=600
+#    G4 P550
+#    MANUAL_STEPPER STEPPER=tool_lock Move=450 SPEED=600
+#    G4 P550
+#    MANUAL_STEPPER STEPPER=tool_lock Move=500 SPEED=50
+#    MANUAL_STEPPER STEPPER=tool_lock set_position=0
+#    MANUAL_STEPPER STEPPER=tool_lock enable=0
+
+[gcode_macro FORCE_UNLOCK]
+gcode:
+     SET_PIN PIN=STDBY VALUE=1
+     SET_PIN PIN=LOCK_IN1 VALUE=0
+     SET_PIN PIN=LOCK_IN2 VALUE=0
+     SET_PIN PIN=LOCK_PWM VALUE=1.0
+     G4 P400
+     SET_PIN PIN=LOCK_PWM VALUE=0.8
+     G4 P50
+     SET_PIN PIN=LOCK_PWM VALUE=0.5
+     G4 P50
+     SET_PIN PIN=LOCK_PWM VALUE=0.3
+     G4 P50
+     SET_PIN PIN=LOCK_PWM VALUE=0.1
+     G4 P50
+     SET_PIN PIN=LOCK_PWM VALUE=0.0
+     SET_PIN PIN=STDBY VALUE=0
+     SET_PIN PIN=LOCK_IN2 VALUE=1
+#    MANUAL_STEPPER STEPPER=tool_lock set_position=312
+#    MANUAL_STEPPER STEPPER=tool_lock Move=280 SPEED=100
+#    MANUAL_STEPPER STEPPER=tool_lock Move=-75 SPEED=600
+#    MANUAL_STEPPER STEPPER=tool_lock Move=-35 SPEED=100
+#    MANUAL_STEPPER STEPPER=tool_lock set_position=0
+#    MANUAL_STEPPER STEPPER=tool_lock enable=0
+
+[gcode_macro PARK_extruder]
+gcode:
+    SAVE_GCODE_STATE NAME=park0
+    
+    M204 S2000    
+
+    G1 Y250 x10.5 f30000
+    G1 Y280 f6000
+
+    FORCE_UNLOCK
+    SAVE_VARIABLE VARIABLE=currenttool VALUE='"none"'
+
+    {% if printer.extruder.temperature >= 170%}
+        G92 E0
+        G1 E-1 F2400
+        G92 E0
+    {% endif %}
+
+    G1 Y250 f30000
+
+    RESTORE_GCODE_STATE NAME=park0
+    SET_INPUT_SHAPER SHAPER_FREQ_X=0 SHAPER_FREQ_Y=0
+    SET_GCODE_OFFSET Z_ADJUST=0.2  move=1
+[gcode_macro PICK_extruder]
+gcode:
+
+    PARK_CURRENT
+    ACTIVATE_EXTRUDER EXTRUDER=extruder
+    SAVE_GCODE_STATE NAME=park0
+
+    M204 S2000 
+
+    {% if printer.extruder.temperature >= 170%}
+        G92 E0
+        G1 Y250 x10.5 E15 F6000
+        G92 E0
+        G1 E-1 F3000
+        G92 E0
+    {% else %}
+        G1 Y250 x10.5 f18000
+    {% endif %}
+
+#    G1 Y250 x10.5 f18000
+    G1 Y286 f3600
+
+    FORCE_LOCK
+    SAVE_VARIABLE VARIABLE=currenttool VALUE='"extruder"'
+
+    G1 Y230 F6000
+    force_lock
+
+    {% if printer.extruder.temperature >= 170%}
+        G1 Y270 F6000
+        G1 Y230 F6000
+        G1 Y270 F6000
+        G1 Y230 F6000
+        G1 Y270 F6000
+        G1 Y230 F6000
+    {% endif %}
+
+    G1 Y220 f10000
+
+
+    RESTORE_GCODE_STATE NAME=park0
+    SET_GCODE_OFFSET Z_ADJUST=-0.2  move=1 speed=100
+    SET_INPUT_SHAPER SHAPER_FREQ_X=84.6 SHAPER_TYPE_X=3hump_ei SHAPER_FREQ_Y=50.2 SHAPER_TYPE_Y=mzv
+
+[gcode_macro PARK_extruder1]
+gcode:
+    SAVE_GCODE_STATE NAME=park0
+
+    {% if printer.extruder1.temperature >= 170%}
+        G92 E0
+        G1 E-1 F2400
+        G92 E0
+    {% endif %}
+
+    M204 S2000 
+
+    G1 Y250 X291 f30000
+    G1 Y287 F3000
+
+    FORCE_UNLOCK
+    SAVE_VARIABLE VARIABLE=currenttool VALUE='"none"'
+
+    G1 Y250 f3000
+
+
+    RESTORE_GCODE_STATE NAME=park0
+    SET_GCODE_OFFSET Z_ADJUST=-0.05  move=1 speed=100
+
+    SET_INPUT_SHAPER SHAPER_FREQ_X=0 SHAPER_FREQ_Y=0
+
+[gcode_macro PICK_extruder1]
+gcode:
+    PARK_CURRENT
+    ACTIVATE_EXTRUDER EXTRUDER=extruder1
+    SAVE_GCODE_STATE NAME=park0
+
+    M204 S2000 
+
+    {% if printer.extruder1.temperature >= 170%}
+        G92 E0
+        G1 Y250 X291 E15 F6000
+        G92 E0
+        G1 E-1 F3000
+        G92 E0
+    {% else %}
+        G1 Y250 X291 f50000
+    {% endif %}
+
+#    G1 Y250 X291 f30000
+    G1 Y288.5 f3000
+
+    FORCE_LOCK
+    SAVE_VARIABLE VARIABLE=currenttool VALUE='"extruder1"'
+    G1 Y245 F6000
+    force_lock
+
+   {% if printer.extruder.temperature >= 170%}
+        G1 Y245 F6000
+        G1 Y270 F6000
+        G1 Y245 F6000
+        G1 Y270 F6000
+        G1 Y245 F6000
+    {% endif %}
+    G1 Y220 f10000
+
+    RESTORE_GCODE_STATE NAME=park0
+    SET_INPUT_SHAPER SHAPER_TYPE_X=EI SHAPER_FREQ_X=41.4 SHAPER_TYPE_Y=mzv SHAPER_FREQ_Y=43.4
+    SET_GCODE_OFFSET Z_ADJUST=0.05  move=1 speed=100
+    G1 
+
+[gcode_macro PICK_mill]
+gcode:
+    PARK_CURRENT
+    SAVE_GCODE_STATE NAME=park0
+
+    M204 S8000 
+
+    G91
+    g1 z5 f20000
+    g90
+    G1 Y250 X210.9 f30000
+    G1 Y279.5 f6000
+
+    FORCE_LOCK
+    SAVE_VARIABLE VARIABLE=currenttool VALUE='"mill"'
+
+    G1 Y250 f30000
+
+    MANUAL_STEPPER STEPPER=tool_lock set_position=0
+    MANUAL_STEPPER STEPPER=tool_lock Move=300 SPEED=600
+    MANUAL_STEPPER STEPPER=tool_lock enable=0
+
+    G91
+    g1 z-5 f30000
+    g90
+
+    RESTORE_GCODE_STATE NAME=park0
+    SET_INPUT_SHAPER SHAPER_FREQ_X=0 SHAPER_FREQ_Y=0
+    SET_GCODE_OFFSET Z_ADJUST=30.35 X_ADJUST=-0.2 Y_ADJUST=16.5 move=1 MOVE_SPEED=30000
+    M204 s200
+    SET_PIN PIN=millpin VALUE=1
+
+[gcode_macro PARK_mill]
+gcode:
+    SET_PIN PIN=millpin VALUE=0
+    SET_GCODE_OFFSET X_ADJUST=0.2 Y_ADJUST=-16.5 move=1 MOVE_SPEED=30000
+
+    SAVE_GCODE_STATE NAME=park0
+
+    M204 S8000 
+
+    G1 Y250 x210.9 f30000
+    G1 Y279 F3600
+
+    FORCE_UNLOCK
+    SAVE_VARIABLE VARIABLE=currenttool VALUE='"none"'
+
+    G1 Y250 f30000
+
+    RESTORE_GCODE_STATE NAME=park0
+
+    SET_INPUT_SHAPER SHAPER_FREQ_X=0 SHAPER_FREQ_Y=0
+    SET_GCODE_OFFSET Z_ADJUST=-30.35
+
+
+# Activate the primary extruder
+[gcode_macro T0]
+gcode:
+    {% if not printer.toolhead.homed_axes %}
+        M118 PP > Error: Not homed! {printer.toolhead.homed_axes}
+    {% else %}
+        {% set svv = printer.save_variables.variables %}
+        {% if not (svv.currenttool == "extruder") %}
+            {% if not (svv.currenttool == "none") %}
+                PARK_{svv.currenttool}
+            {% endif %}
+            PICK_EXTRUDER
+        {% endif %}
+    {% endif %}
+
+[extruder1]
+step_pin: ar26
+dir_pin: !ar28
+enable_pin: !ar24
+step_distance: 0.0024589849952489
+nozzle_diameter: 0.4
+filament_diameter: 1.7500
+#max_extrude_cross_section:
+max_extrude_only_distance: 700
+#max_extrude_only_velocity:
+#max_extrude_only_accel:
+pressure_advance: 0.03
+#pressure_advance_lookahead_time: 0.010
+heater_pin: ar10
+#max_power: 1.0
+sensor_type: ATC Semitec 104GT-2
+#   Type of sensor - this may be "EPCOS 100K B57560G104F", "ATC
+#   Semitec 104GT-2", "NTC 100K beta 3950", "Honeywell 100K
+#   135-104LAG-J01", "NTC 100K MGB18-104F39050L32", "AD595", "PT100
+#   INA826", "MAX6675", "MAX31855", "MAX31856", or "MAX31865".
+#   Additional sensor types may be available - see the
+#   example-extras.cfg file for details. This parameter must be
+#   provided.
+sensor_pin: analog13
+#pullup_resistor: 4700
+#inline_resistor: 0
+#adc_voltage: 5.0
+#smooth_time: 2.0
+#control: pid
+#pid_kp = 32.551
+#pid_ki = 4.094
+#pid_kd = 64.694
+#pid_integral_max:
+#pwm_cycle_time: 0.100
+min_temp: 0
+max_temp: 297
+
+[gcode_macro T1]
+gcode:
+    {% if not printer.toolhead.homed_axes %}
+        M118 PP > Error: Not homed! {printer.toolhead.homed_axes}
+    {% else %}
+        {% set svv = printer.save_variables.variables %}
+        {% if not (svv.currenttool == "extruder1") %}
+            {% if not (svv.currenttool == "none") %}
+                PARK_{svv.currenttool}
+            {% endif %}
+            PICK_EXTRUDER1
+        {% endif %}
+    {% endif %}
+
+
+
+[extruder]
+step_pin: ar36
+dir_pin: ar34
+enable_pin: !ar30
+step_distance: 0.0024009725202377
+nozzle_diameter: 0.4
+filament_diameter: 1.7500
+max_extrude_only_distance: 650
+pressure_advance: 0.08
+heater_pin: ar7
+#max_power: 1.0
+sensor_type: ATC Semitec 104GT-2
+#   Type of sensor - this may be "EPCOS 100K B57560G104F", "ATC
+#   Semitec 104GT-2", "NTC 100K beta 3950", "Honeywell 100K
+#   135-104LAG-J01", "NTC 100K MGB18-104F39050L32", "AD595", "PT100
+#   INA826", "MAX6675", "MAX31855", "MAX31856", or "MAX31865".
+#   Additional sensor types may be available - see the
+#   example-extras.cfg file for details. This parameter must be
+#   provided.
+sensor_pin: analog15
+#control: pid
+#pid_Kp: 16.34
+#pid_Ki: 1.16
+#pid_Kd: 57.57
+#min_extrude_temp: 170
+min_temp: 0
+max_temp: 297
+
+[heater_bed]
+heater_pin: ar8
+sensor_type: NTC 100K beta 3950
+sensor_pin: analog14
+#control: pid
+#pid_Kp: 54.73
+#pid_Ki: 1.69
+#pid_Kd: 1180.74
+#max_delta: 2.0
+#   On 'watermark' controlled heaters this is the number of degrees in
+#   Celsius above the target temperature before disabling the heater
+#   as well as the number of degrees below the target before
+#   re-enabling the heater. The default is 2 degrees Celsius.
+min_temp: 0
+max_temp: 140
+max_power: 1.0
+
+# Print cooling fan 
+[fan]
+pin: ar9
+#pin: tool:PC13
+max_power: 0.51
+#shutdown_speed: 0
+#   The desired fan speed (expressed as a value from 0.0 to 1.0) if
+#   the micro-controller software enters an error state. The default
+#   is 0.
+#cycle_time: 0.010
+#   The amount of time (in seconds) for each PWM power cycle to the
+#   fan. It is recommended this be 10 milliseconds or greater when
+#   using software based PWM. The default is 0.010 seconds.
+#hardware_pwm: False
+#   Enable this to use hardware PWM instead of software PWM. Most fans
+#   do not work well with hardware PWM, so it is not recommended to
+#   enable this unless there is an electrical requirement to switch at
+#   very high speeds. When using hardware PWM the actual cycle time is
+#   constrained by the implementation and may be significantly
+#   different than the requested cycle_time. The default is False.
+#kick_start_time: 0.100
+#   Time (in seconds) to run the fan at full speed when first enabling
+#   it (helps get the fan spinning). The default is 0.100 seconds.
+
+# Micro-controller information.
+[mcu]
+serial: /dev/ttyUSB0
+#   The serial port to connect to the MCU. If unsure (or if it
+#   changes) see the "Where's my serial port?" section of the FAQ. The
+#   default is /dev/ttyS0
+#baud: 250000
+#   The baud rate to use. The default is 250000.
+pin_map: arduino
+#   This option may be used to enable Arduino pin name aliases. The
+#   default is to not enable the aliases.
+#restart_method:
+#   This controls the mechanism the host will use to reset the
+#   micro-controller. The choices are 'arduino', 'rpi_usb', and
+#   'command'. The 'arduino' method (toggle DTR) is common on Arduino
+#   boards and clones. The 'rpi_usb' method is useful on Raspberry Pi
+#   boards with micro-controllers powered over USB - it briefly
+#   disables power to all USB ports to accomplish a micro-controller
+#   reset. The 'command' method involves sending a Klipper command to
+#   the micro-controller so that it can reset itself. The default is
+#   'arduino' if the micro-controller communicates over a serial port,
+#   'command' otherwise.
+
+#[mcu tool]
+#serial: /dev/ttyACM0
+##baud: 250000
+##   The baud rate to use. The default is 250000.
+
+
+# The printer section controls high level printer settings.
+[printer]
+kinematics: corexy
+#   This option must be "cartesian" for cartesian printers.
+max_velocity: 450
+#   Maximum velocity (in mm/s) of the toolhead (relative to the
+#   print). This parameter must be specified.
+max_accel: 8000
+#   Maximum acceleration (in mm/s^2) of the toolhead (relative to the
+#   print). This parameter must be specified.
+#max_accel_to_decel:
+#   A pseudo acceleration (in mm/s^2) controlling how fast the
+#   toolhead may go from acceleration to deceleration. It is used to
+#   reduce the top speed of short zig-zag moves (and thus reduce
+#   printer vibration from these moves). The default is half of
+#   max_accel.
+max_z_velocity: 20
+#   For cartesian printers this sets the maximum velocity (in mm/s) of
+#   movement along the z axis. This setting can be used to restrict
+#   the maximum speed of the z stepper motor on cartesian
+#   printers. The default is to use max_velocity for max_z_velocity.
+max_z_accel: 100
+#   For cartesian printers this sets the maximum acceleration (in
+#   mm/s^2) of movement along the z axis. It limits the acceleration
+#   of the z stepper motor on cartesian printers. The default is to
+#   use max_accel for max_z_accel.
+square_corner_velocity: 5
+#   The maximum velocity (in mm/s) that the toolhead may travel a 90
+#   degree corner at. A non-zero value can reduce changes in extruder
+#   flow rates by enabling instantaneous velocity changes of the
+#   toolhead during cornering. This value configures the internal
+#   centripetal velocity cornering algorithm; corners with angles
+#   larger than 90 degrees will have a higher cornering velocity while
+#   corners with angles less than 90 degrees will have a lower
+#   cornering velocity. If this is set to zero then the toolhead will
+#   decelerate to zero at each corner. The default is 5mm/s.
+
+
+# Looking for more options? Check the example-extras.cfg file.
+
+#Controller cooling fan (one may define any number of sections with a
+# "controller_fan" prefix). A "controller fan" is a fan that will be
+# enabled whenever its associated heater or any configured stepper
+# driver is active. The fan will stop, whenever an idle_timeout is
+# reached to ensure no overheating will occur after deactivating a
+# watched component.
+#[controller_fan my_controller_fan]
+#pin: ar44
+#max_power: 0.8
+#shutdown_speed:
+#cycle_time:
+#hardware_pwm:
+#kick_start_time:
+#   See the "fan" section in example.cfg for a description of the
+#   above parameters.
+#idle_timeout:
+#   The ammount of time (in seconds) after a stepper driver or heater
+#   was active and the fan should be kept running. The default
+#   is 30 seconds.
+#idle_speed:
+#   The fan speed (expressed as a value from 0.0 to 1.0) that the fan
+#   will be set to when a heater or stepper driver was active and before
+#   the idle_timeout is reached. This must be greater or equal
+#   max_power. The default is max_power
+#heater:
+#   Name of the config section defining the heater that this fan is
+#   associated with. If a comma separated list of heater names is
+#   provided here, then the fan will be enabled when any of the given
+#   heaters are enabled. The default is "extruder".
+
+
+# Heater cooling fans (one may define any number of sections with a
+# "heater_fan" prefix). A "heater fan" is a fan that will be enabled
+# whenever its associated heater is active. By default, a heater_fan
+# has a shutdown_speed equal to max_power.
+#[heater_fan my_nozzle_fan]
+#pin: ar7
+##max_power: 1.0
+##shutdown_speed:
+##cycle_time:
+##hardware_pwm:
+##kick_start_time:
+##   See the "fan" section in example.cfg for a description of the
+##   above parameters.
+##heater: extruder
+##   Name of the config section defining the heater that this fan is
+##   associated with. If a comma separated list of heater names is
+##   provided here, then the fan will be enabled when any of the given
+##   heaters are enabled. The default is "extruder".
+##heater_temp: 50.0
+##   A temperature (in Celsius) that the heater must drop below before
+##   the fan is disabled. The default is 50 Celsius.
+##fan_speed: 1.0
+##   The fan speed (expressed as a value from 0.0 to 1.0) that the fan
+##   will be set to when its associated heater is enabled. The default
+##   is 1.0
+
+
+
+
+# Common EXP1 / EXP2 (display) pins
+[board_pins]
+aliases:
+    # Common EXP1 header found on many "all-in-one" ramps clones
+    EXP1_1=ar37, EXP1_3=ar17, EXP1_5=ar23, EXP1_7=ar27, EXP1_9=<GND>,
+    EXP1_2=ar35, EXP1_4=ar16, EXP1_6=ar25, EXP1_8=ar29, EXP1_10=<5V>,
+    # EXP2 header
+    EXP2_1=ar50, EXP2_3=ar31, EXP2_5=ar33, EXP2_7=ar49, EXP2_9=<GND>,
+    EXP2_2=ar52, EXP2_4=ar53, EXP2_6=ar51, EXP2_8=ar41, EXP2_10=<RST>
+    # Pins EXP2_1, EXP2_6, EXP2_2 are also MISO, MOSI, SCK of bus "spi"
+    # Note, some boards wire: EXP2_8=<RST>, EXP2_10=ar41
+
+[display]
+lcd_type: st7920
+cs_pin: EXP1_4
+sclk_pin: EXP1_5
+sid_pin: EXP1_3
+encoder_pins: ^EXP2_3, ^EXP2_5
+click_pin: ^!EXP1_2
+kill_pin: ^!EXP2_8
+
+[output_pin beeper]
+pin: EXP1_1
+
+
+[tmc2209 stepper_x]
+#interpolate: false
+uart_pin: ar59
+microsteps: 16
+run_current: 1.0
+stealthchop_threshold: 0
+
+[tmc2209 stepper_y]
+#interpolate: false
+uart_pin: ar64
+microsteps: 16
+run_current: 1.0
+stealthchop_threshold: 0
+
+[tmc2208 stepper_z]
+#interpolate: false
+uart_pin: ar44
+microsteps: 16
+run_current: 1.0
+
+
+[output_pin beeper]
+pin: EXP1_1
+
+[output_pin beeper]
+pin: EXP1_1
+
+[menu __filament __load]
+type: command
+name: Load Filament
+gcode:
+    filament_load
+    M82
+
+[menu __filament __unload]
+type: command
+name: Unload Filament
+gcode:
+    filament_unload
+    M82
+
+#*# <---------------------- SAVE_CONFIG ---------------------->
+#*# DO NOT EDIT THIS BLOCK OR BELOW. The contents are auto-generated.
+#*#
+#*# [extruder]
+#*# control = pid
+#*# pid_kp = 20.903
+#*# pid_ki = 0.974
+#*# pid_kd = 112.090
+#*#
+#*# [heater_bed]
+#*# control = pid
+#*# pid_kp = 50.489
+#*# pid_ki = 1.011
+#*# pid_kd = 630.479
+#*#
+#*# [bed_mesh default]
+#*# version = 1
+#*# points =
+#*# 	  -0.146250, -0.636250, -0.721250, -0.318750
+#*# 	  -0.110000, -0.497500, -0.543750, -0.116250
+#*# 	  0.060000, -0.310000, -0.311250, 0.091250
+#*# 	  0.125000, -0.097500, -0.033750, 0.306250
+#*# tension = 0.2
+#*# min_x = 10.0
+#*# algo = bicubic
+#*# y_count = 4
+#*# mesh_y_pps = 3
+#*# min_y = 0.0
+#*# x_count = 4
+#*# max_y = 210.0
+#*# mesh_x_pps = 2
+#*# max_x = 289.99
+#*#
+#*# [bed_mesh abs]
+#*# version = 1
+#*# points =
+#*# 	-0.750000, -0.927500, -0.881250, -0.546250
+#*# 	-0.722500, -0.805000, -0.747500, -0.433750
+#*# 	-0.682500, -0.750000, -0.663750, -0.383750
+#*# 	-0.812500, -0.791250, -0.657500, -0.408750
+#*# tension = 0.2
+#*# min_x = 10.0
+#*# algo = bicubic
+#*# y_count = 4
+#*# mesh_y_pps = 3
+#*# min_y = 0.0
+#*# x_count = 4
+#*# max_y = 210.0
+#*# mesh_x_pps = 2
+#*# max_x = 289.99
+#*#
+#*# [bed_mesh pla]
+#*# version = 1
+#*# points =
+#*# 	-0.186250, -0.532500, -0.510000, -0.028750
+#*# 	-0.250000, -0.506250, -0.460000, 0.028750
+#*# 	-0.250000, -0.485000, -0.413750, 0.040000
+#*# 	-0.341250, -0.487500, -0.370000, 0.050000
+#*# tension = 0.2
+#*# min_x = 10.0
+#*# algo = bicubic
+#*# y_count = 4
+#*# mesh_y_pps = 3
+#*# min_y = 0.0
+#*# x_count = 4
+#*# max_y = 210.0
+#*# mesh_x_pps = 2
+#*# max_x = 289.99
+#*#
+#*# [extruder1]
+#*# control = pid
+#*# pid_kp = 21.442
+#*# pid_ki = 1.162
+#*# pid_kd = 98.902
