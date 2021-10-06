@@ -18,3 +18,6 @@ Put aluminium foil where the pellet/nozzle would touch to reduce the chance of a
 here's mine:
 
 ![20211005_204830](https://user-images.githubusercontent.com/44164611/136202425-da0b0a40-df5c-4894-80db-0f307e7ec35e.png)
+
+Here's an older version in action!:
+https://twitter.com/AmyTheBun/status/1445347870236946432?s=20
