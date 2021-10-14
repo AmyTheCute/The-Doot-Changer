@@ -1,5 +1,9 @@
 This is a per tool pebble wiper that has the BOM fo only a spring
 
+EDIT: WARNING! this design stopped working, no idea why but the pebbles stick so hard to the kapton tape now that even with my nails it takes a lot of effort to push it, so it needs powerful springs (3x the same spring I use, which is troublesome because my fan duct is what's pushing it and it's not very strongly mounted)
+
+i'm working on 4 new designs that hopefully might work, so in the meantime, try this at your own risk! tho i gotta admit abs works perfect with this, but PLA specially sticks SUPER well, to the point of it not being able to be poked off without help. and the slope at the end of the block sometimes makes the not fully cooled filament deform and get under the block's rail, anyways I have a few ideas on how to fix it! but i'm very sick
+
 If you plan on modifying this to fit another printer, know that some tilt/flex is a good thing if you plant to use the wiping moving block (Block.stl) as a brush to hit the tip of the nozzle too as it has chamfers to rub on the nozzles and some flex helps. however this isn't necessary and you can always add a silicone brush at the end
 
 The extension spring I used:
