@@ -39,8 +39,6 @@ Lightning BTC donations/Gift Cards(ask me what I can use!): Message me on Twitte
 
 **Doge:** DMMuSDFufAwfoH3Mz64xYXeXyXZaeigpmg
 
-**Ada:** addr1q8l76pjwzsrdls7mnaw3ceg3ww6ulyrpfwzxp9s3seanyndfgqdn7wjen3gxza8a3pz5uehukvyfqe6hrls5k3fe738q2vm566
-
 **Dash:** XbxqB5sxuhRHdn6SaST4ezvLropXV4gDFs
 
 
