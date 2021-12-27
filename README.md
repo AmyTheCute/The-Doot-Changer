@@ -3,7 +3,8 @@ Files and designs for The Doot Changer
 Welcome to the official page for the Doot Changer Project! Keep in mind that Doot Changer Twist is still in alpha and although this version is working well you should build it at risk
 
 Update: this project is seriously out of date.
-But when I get the money and if I get to canada. I'm designing a far superior version. expect fast printing speeds, a more awesome mechanism etc
+But I'm planning on leaving the country for education. I'm designing a far superior version. expect fast printing speeds, a more awesome mechanism when i finally arrive!
+However, aside from the motion system you should feel free to transfer the locking mechanism to your printer, however if you're in a hurry you can Message me to design you the new locking mechanism, or you can simply upgrade when i'm done as it barely costs anything to upgreade (it needs aluminium tape and yup, that's it. add 2 wires to your carriage and leave it there for the upgrade
 
 **WARNING**: Doot Changer Twist is missing some files. Contact me at Twitter: https://twitter.com/AmyTheBun to get the files, they're unoptimized and therefore not published. They'll be re-designed and published very soon
 
