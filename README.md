@@ -1,4 +1,7 @@
 # The-Doot-Changer
+
+**Warning, project is abandonded for the time being, potential Doot Eternal might be in progress down the line, for the time being, feel free to email me at Amythemaplebun@gmail.com to ask for guidance/files to fit this project into your own printers, or simply ask for what I learned making this tool changer**
+
 Files and designs for The Doot Changer
 Welcome to the official page for the Doot Changer Project! Keep in mind that Doot Changer Twist is still in alpha and although this version is working well you should build it at risk
 
@@ -32,17 +35,6 @@ Do message me if you decide to donate so I can squeak out loud very hard ;3 (nev
 Update!: Thanks to awesome Anya (https://twitter.com/_Iyalei?s=09) for being the first doot changer donator ^~^ bunny heart is truly molten and warm enough to print PEEK
 
 
-Lightning BTC donations/Gift Cards(ask me what I can use!): Message me on Twitter! or email me at amythechloe@gmail.com
-
-**Bitcoin:** bc1q29leehvq80clzepcrm7wtsgnv2tadmvsydmxu7
-
-**Etherium:** 0xA452D135509F47C537F59b5ff25E07224D8d52fA
-
-**Nano:** nano_3zkinhqcqg8xh6odjfebbzee9ami71cspahwopkuqdau6uajigqu5wzuhj3j
-
-**Doge:** DMMuSDFufAwfoH3Mz64xYXeXyXZaeigpmg
-
-**Dash:** XbxqB5sxuhRHdn6SaST4ezvLropXV4gDFs
 
 
 ToDo: Youtube guide
